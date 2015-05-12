@@ -14,6 +14,7 @@ Source2:	cassandra-initd
 Source3:	cassandra-limits
 Source4:	README.asc
 Source5:	cassandra-logrotate
+Source6:	cassandra.in.sh
 
 Conflicts:	cassandra
 Conflicts:	apache-cassandra11
@@ -45,6 +46,7 @@ For more information see http://cassandra.apache.org/
 rm bin/*.bat
 rm tools/bin/*.bat
 rm -fr pylib/cqlshlib/test
+rm bin/cassandra.in.sh
 
 cd lib
 unzip snappy-java-1.0.4.1.jar.zip
@@ -73,11 +75,11 @@ cp %{SOURCE2} %{buildroot}/etc/rc.d/init.d/cassandra
 cp %{SOURCE3} %{buildroot}/etc/security/limits.d/cassandra.conf
 cp %{SOURCE4} %{buildroot}/usr/share/doc/%{name}-%{version}/README.asc
 cp %{SOURCE5} %{buildroot}/etc/logrotate.d/%{name}
+cp %{SOURCE6} %{buildroot}/etc/cassandra/default.conf
+cp %{SOURCE6} %{buildroot}/usr/share/cassandra
+cp %{SOURCE6} %{buildroot}/usr/share/cassandra/default.conf
 
 mv bin/cassandra %{buildroot}/usr/sbin
-cp bin/cassandra.in.sh %{buildroot}/etc/cassandra/default.conf
-cp bin/cassandra.in.sh %{buildroot}/usr/share/cassandra
-mv bin/cassandra.in.sh %{buildroot}/usr/share/cassandra/default.conf
 mv bin/* %{buildroot}/usr/bin
 mv lib/* %{buildroot}/usr/share/cassandra/lib
 mv pylib/* %{buildroot}/usr/lib/python2.6/site-packages
@@ -101,7 +103,7 @@ rm -rf %{buildroot}
 %config(noreplace) %attr(0644, cassandra, cassandra) "/etc/cassandra/default.conf/cassandra-rackdc.properties"
 %config(noreplace) %attr(0644, cassandra, cassandra) "/etc/cassandra/default.conf/cassandra-topology.properties"
 %config(noreplace) %attr(0644, cassandra, cassandra) "/etc/cassandra/default.conf/cassandra-topology.yaml"
-%config(noreplace) %attr(0644, cassandra, cassandra) "/etc/cassandra/default.conf/cassandra.in.sh"
+%attr(0755, cassandra, cassandra) "/etc/cassandra/default.conf/cassandra.in.sh"
 %config(noreplace) %attr(0644, cassandra, cassandra) "/etc/cassandra/default.conf/cassandra.yaml"
 %config(noreplace) %attr(0644, cassandra, cassandra) "/etc/cassandra/default.conf/commitlog_archiving.properties"
 %config(noreplace) %attr(0644, cassandra, cassandra) "/etc/cassandra/default.conf/cqlshrc.sample"
@@ -178,7 +180,7 @@ rm -rf %{buildroot}
 %attr(0644, cassandra, cassandra) "/usr/share/cassandra/default.conf/cassandra-rackdc.properties"
 %attr(0644, cassandra, cassandra) "/usr/share/cassandra/default.conf/cassandra-topology.properties"
 %attr(0644, cassandra, cassandra) "/usr/share/cassandra/default.conf/cassandra-topology.yaml"
-%attr(0644, cassandra, cassandra) "/usr/share/cassandra/default.conf/cassandra.in.sh"
+%attr(0755, cassandra, cassandra) "/usr/share/cassandra/default.conf/cassandra.in.sh"
 %attr(0644, cassandra, cassandra) "/usr/share/cassandra/default.conf/cassandra.yaml"
 %attr(0644, cassandra, cassandra) "/usr/share/cassandra/default.conf/commitlog_archiving.properties"
 %attr(0644, cassandra, cassandra) "/usr/share/cassandra/default.conf/cqlshrc.sample"
